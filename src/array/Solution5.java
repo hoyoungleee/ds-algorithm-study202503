@@ -19,48 +19,44 @@ public class Solution5 {
         }
 
         int max = 0;//최대값 담을 변수
-        //가로방향 최고값
+        //가로방향,세로방향 최고값
         for (int i = 0; i < n; i++) {
-            int sum = 0;
+            int rowSum = 0;
+            int colSum = 0;
             for (int j = 0; j < n; j++) {
-                sum += nums[i][j];
+                rowSum += nums[i][j];
+                colSum += nums[j][i];
             }
-            if(max < sum){
-                max = sum;
-            }
+            max = Math.max(max,rowSum);
+            max = Math.max(max,colSum);
         }
 
-        //세로방향 최고값
+
+        // 왼,오른 대각선
         for (int i = 0; i < n; i++) {
             int sum = 0;
-            for (int j = 0; j < n; j++) {
-                sum += nums[j][i];
-            }
-            if(max < sum){
-                max = sum;
-            }
-        }
-
-        int sum2 = 0;
-        //왼대각선
-        for (int i = 0; i < n; i++) {
-
+            int sum2 = 0;
             sum2 += nums[i][i];
-
-        }
-        if(max < sum2){
-            max = sum2;
-        }
-        // 오른 대각선
-        for (int i = 0; i < n; i++) {
-            int sum = 0;
             for (int j = n-1; j >= 0; j--) {
                 sum += nums[j][i];
             }
-            if(max < sum){
-                max = sum;
-            }
+            max = Math.max(max,sum);
+            max = Math.max(max,sum2);
         }
+
+        // 00 11 22 33 44
+        // 04 13 22 31 40
+        int diag1Sum = 0;
+        int diag2Sum = 0;
+        for (int i = 0; i < n; i++) {
+            diag1Sum += nums[i][i];
+            diag2Sum = nums[i][n-1-i];
+
+        }
+        max = Math.max(max,diag1Sum);
+        max = Math.max(max,diag2Sum);
+
+
         System.out.println(max);
 
         br.close();
